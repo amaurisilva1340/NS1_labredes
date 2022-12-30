@@ -160,4 +160,4 @@ $ dig -x 10.9.14.10
 $ dig -x 10.9.14.11
 ```
 
-<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/016.jpg?raw=true"
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/016.jpg?raw=true">
