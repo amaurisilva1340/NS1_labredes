@@ -84,4 +84,80 @@ $ sudo nano db.10.9.13.rev
 $ sudo nano /etc/bind/named.conf.local
 ```
 
-<img src
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/007.jpg?raw=true">
+
+### Verificação de sintaxe 
+   * Para checar a sintaxe de configuração do BIND deve-se executar o comando named-checkconf. Este scritp checa os arquivos /etc/bind/named.conf.local.*
+
+```bash
+$sudo named-checkconf
+```
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/10.jpg?raw=true">
+
+###  Verificar a sintaxe dos arquivos de dados
+   * Para verificar se a formatação da sintaxe dos arquivos db está correta, utiliza-se o script named-checkconf da seguinte forma: ***named-check-zone <zone> <db_file>***
+   
+   ```bash
+$ cd /etc/bind/zones
+$ sudo named-checkzone grupo6.turma913.ifalara.local db.grupo6.turma913.ifalara.local
+```
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/008.jpg?raw=true" >
+
+```bash
+$ sudo named-checkzone 13.9.10.in-addr.arpa db.10.9.13.rev
+```
+
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/009.jpg?raw=true" >
+
+### Configure para somente resolver endereços IPv4
+
+```bash
+$sudo nano /etc/default/named
+```
+- adicione a linha ***OPTIONS="-4 -u bind"***
+
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/011.jpg?raw=true">
+
+### Execute o BIND 
+```bash
+$ sudo systemctl enable bind9
+$ sudo systemctl restart bind9
+```
+
+### Configuração dos clientes
+   * Configure o dns no nas máquina ns1, ns2 e us adicionando os campos abaixo na interface de rede local deses servidores. Observe que na máquina gw essa configuração deve ser inserida na interface de rede local (enp0s8)
+   * O arquivo de configuração do netplan ficará da seguinte forma:
+   
+   <img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/012.jpg?raw=true">
+   
+   ### Testando o servidor DNS:
+
+#### Teste de configuração como cliente. 
+   * Observe se os campos **DNS servers** e **DNS Domain** estão corretos.
+```bash
+$ systemd-resolve --status enp0s3
+```
+
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/013.jpg?raw=true">
+
+#### Teste o serviço DNS para a máquina ns1.
+
+```bash
+$ dig ns1.grupo6.turma913.ifalara.local
+```
+
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/014.jpg?raw=true"> 
+
+#### Teste o serviço DNS reverso para a máquina ns1. 
+```bash    
+$ dig -x 10.9.14.10
+```
+
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/015.jpg?raw=true">
+
+#### Teste o serviço DNS reverso para a máquina ns2. 
+```bash  
+$ dig -x 10.9.14.11
+```
+
+<img src = "https://github.com/amaurisilva1340/NS1_labredes/blob/Images/016.jpg?raw=true"
